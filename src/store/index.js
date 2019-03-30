@@ -9,11 +9,10 @@ import books from './books'
 Vue.use(Vuex)
 
 const checkTokens = store => {
-  store.subscribeAction((action, state) => {
+  store.subscribeAction(async (action, state) => {
     // Skip this for actions that don't need to refresh token
     const skipActionTypes = ['login', 'refreshToken']
     if (skipActionTypes.filter(type => type === action.type).length > 0) return
-
     // Check if token needs refreshing
     if (state.auth.accessToken !== '') {
       const tokenExpiryWindow = 600 // milliseconds (10 min)

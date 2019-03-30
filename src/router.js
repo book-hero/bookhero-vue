@@ -22,6 +22,7 @@ export default new Router({
       name: 'home',
       component: Main,
       redirect: { name: 'feed' },
+      meta: { requiresAuth: true },
       children: [
         {
           path: '/contribute',

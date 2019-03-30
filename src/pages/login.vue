@@ -56,6 +56,9 @@ export default {
       serverErrors: []
     }
   },
+  created() {
+    console.log('login created')
+  },
   methods: {
     async login() {
       this.errors = []
@@ -64,13 +67,10 @@ export default {
         email: this.email,
         password: this.password
       })
-      console.log({ result })
       if (result !== undefined && result.errors !== undefined) {
         this.serverErrors = result.errors.non_field_errors || []
       }
-      // console.log('hello?')
-      let books = await this.$store.dispatch('getBooks')
-      console.log({ books })
+      this.$router.push({ name: 'feed' })
     },
     validForm() {
       this.emailError = false
