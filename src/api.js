@@ -13,19 +13,19 @@ async function makeCall(apiCall, params) {
     const response = await apiCall(...params)
     return response.data
   } catch (e) {
-    console.error({ error: e })
-    throw Error(e)
+    // console.error({ error: e.response.data })
+    return { errors: e.response.data }
   }
 }
 
 function calls(base) {
   return {
     get(additionalUrl) {
-      const url = base + (additionalUrl || '')
+      const url = base + (additionalUrl || '') + '/'
       return makeCall(axios.get, [url])
     },
     post(additionalUrl, body) {
-      const url = base + (additionalUrl || '')
+      const url = base + (additionalUrl || '') + '/'
       return makeCall(axios.post, [url, body])
     },
     put(url) {
@@ -41,5 +41,9 @@ function calls(base) {
 }
 
 export const booksApi = (() => {
-  return calls(BASE_URL + 'books/')
+  return calls(BASE_URL + 'books')
+})()
+
+export const authApi = (() => {
+  return calls(BASE_URL + 'auth')
 })()

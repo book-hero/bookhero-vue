@@ -11,13 +11,10 @@ export default {
       console.log({ result })
     },
     async addBook({ }, book) {
-      console.log("hello")
       const authorsObject = book.authors.map(author => ({ name: author }))
-      console.log(authorsObject)
-      const bookInfo = R.assoc('authors', authorsObject, book)
-      console.log(bookInfo)
-      const result = await booksApi.post('', bookInfo)
-      console.log({ result })
+      const bookInfo = R.assoc('/authors', authorsObject, book)
+      // first add a book to the database
+      const result = await booksApi.post('/', bookInfo)
     }
   },
   mutations: {

@@ -4,6 +4,7 @@ import Contribute from './pages/contribute'
 import Discover from './pages/discover'
 import Feed from './pages/feed'
 import Main from './layouts/main'
+import Login from './pages/login'
 
 Vue.use(Router)
 
@@ -11,6 +12,11 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
     {
       path: '/',
       name: 'home',
