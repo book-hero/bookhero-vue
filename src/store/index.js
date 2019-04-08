@@ -5,6 +5,7 @@ import jwtDecode from 'jwt-decode'
 
 import auth from './auth'
 import books from './books'
+import profile from './profile'
 
 Vue.use(Vuex)
 
@@ -30,9 +31,18 @@ const checkTokens = store => {
 }
 
 export default new Vuex.Store({
+  strict: process.env.NODE_ENV !== 'production',
+  actions: {
+    async init({ dispatch }) {
+      // Refresh token first!
+      await dispatch('refreshToken')
+      await dispatch('getBookList')
+    }
+  },
   plugins: [checkTokens],
   modules: {
     auth,
-    books
+    books,
+    profile
   }
 })

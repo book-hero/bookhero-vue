@@ -7,7 +7,6 @@ export default {
     isLoggedIn: false
   },
   actions: {
-    triggerPlugin() { },
     async login({ commit }, info) {
       const result = await authApi.post('', info)
 

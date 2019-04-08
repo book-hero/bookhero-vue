@@ -20,9 +20,9 @@ async function makeCall(apiCall, params) {
 
 function calls(base) {
   return {
-    get(additionalUrl) {
+    get(additionalUrl, params) {
       const url = base + (additionalUrl || '') + '/'
-      return makeCall(axios.get, [url])
+      return makeCall(axios.get, [url, { params }])
     },
     post(additionalUrl, body) {
       const url = base + (additionalUrl || '') + '/'
@@ -46,4 +46,8 @@ export const booksApi = (() => {
 
 export const authApi = (() => {
   return calls(BASE_URL + 'auth')
+})()
+
+export const userApi = (() => {
+  return calls(BASE_URL + 'user')
 })()

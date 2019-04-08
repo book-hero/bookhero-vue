@@ -11,6 +11,16 @@ import axios from 'axios'
 import SearchBar from '../components/search-bar'
 import SearchResults from '../components/search-results'
 
+// const openLibraryApi = axios.create({
+//   url: 'http://openlibrary.org/search.json',
+//   transformRequest: [
+//     (data, headers) => {
+//       delete headers.common.Authorization
+//       return data
+//     }
+//   ]
+// })
+
 export default {
   components: {
     SearchBar,
@@ -18,24 +28,29 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
-      results: []
+      isLoading: false
+      // results: []
+    }
+  },
+  computed: {
+    results() {
+      return this.$store.state.books.searchResults
     }
   },
   methods: {
-    runSearch(term) {
+    async runSearch(term) {
       this.isLoading = true
+      await this.$store.dispatch('searchBooks', term)
 
-      axios.get(
-        `http://openlibrary.org/search.json?title=${encodeURIComponent(
-          term
-        )}`
-      ).then((result) => {
-        this.results = result.data.docs
-        console.log(result)
-      }).finally(() => {
-        this.isLoading = false
-      })
+      // openLibraryApi
+      //   .request({ params: { title: term } })
+      //   .then(result => {
+      //     this.results = result.data.docs
+      //     console.log(result)
+      //   })
+      //   .finally(() => {
+      this.isLoading = false
+      //   })
     }
   }
 }

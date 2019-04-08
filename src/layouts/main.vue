@@ -2,20 +2,24 @@
   <div id="main-layout">
     <nav-bar></nav-bar>
     <div class="content">
-      <div id="right-column" class="col-3"></div>
+      <div id="right-column" class="col-2"></div>
       <div id="middle-column" class="col">
         <router-view></router-view>
       </div>
-      <div id="left-column" class="col-3"></div>
+      <div id="left-column" class="col-4">
+        <book-list></book-list>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import NavBar from '../components/navbar'
+import BookList from '../components/book-list'
 export default {
   components: {
-    NavBar
+    NavBar,
+    BookList
   },
   data() {
     return {}
@@ -38,7 +42,8 @@ export default {
     padding-top: 20px;
   }
 }
-#middle-column {
+#middle-column,
+#left-column {
   height: 100%;
   overflow-y: auto;
 }
