@@ -11,10 +11,9 @@ export default {
       console.log({ result })
     },
     async addBook({ }, book) {
-      const authorsObject = book.authors.map(author => ({ name: author }))
-      const bookInfo = R.assoc('authors', authorsObject, book)
       // first add a book to the database
-      const result = await booksApi.post('/', bookInfo)
+      const result = await booksApi.post('', book)
+      return result
     },
     async searchBooks({ commit }, term) {
       const results = await booksApi.get('/search', { title: term })

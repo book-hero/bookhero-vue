@@ -23,13 +23,7 @@ export default {
   },
   methods: {
     addBook(book) {
-      console.log(book)
-      const bookInfo = {
-        title: book.title,
-        authors: book.author_name,
-        open_library_cover_id: book.cover_i
-      }
-      this.$store.dispatch('addBookToList', bookInfo)
+      this.$store.dispatch('addBookToList', book)
     }
   },
   props: {

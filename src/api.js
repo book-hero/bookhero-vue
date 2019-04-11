@@ -7,13 +7,13 @@ function isFunction(functionToCheck) {
 }
 
 async function makeCall(apiCall, params) {
-  console.log(...params)
   if (!isFunction(apiCall)) throw Error('apiCall is not a function')
+  console.log(...params)
   try {
     const response = await apiCall(...params)
     return response.data
   } catch (e) {
-    // console.error({ error: e.response.data })
+    console.error({ errors: e.response.data })
     return { errors: e.response.data }
   }
 }
@@ -31,11 +31,13 @@ function calls(base) {
     put(url) {
       axios.put(base + url || '')
     },
-    delete(url) {
-      axios.delete(base + url || '')
+    delete(additionalUrl, params) {
+      const url = base + (additionalUrl || '') + '/'
+      return makeCall(axios.delete, [url, { params }])
     },
-    patch(url) {
-      axios.patch(base + url || '')
+    patch(additionalUrl, body) {
+      const url = base + (additionalUrl || '') + '/'
+      return makeCall(axios.patch, [url, body])
     }
   }
 }

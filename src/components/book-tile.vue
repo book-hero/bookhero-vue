@@ -1,9 +1,9 @@
 <template>
   <div class="list-group-item">
-    <img :src="`http://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`">
+    <img :src="`http://covers.openlibrary.org/b/id/${book.open_library_cover_id}-M.jpg`">
     <div>
-      <h5>{{book.title}}</h5>
-      <p>{{book.author_name !== undefined ? book.author_name.join(', ') : ''}}</p>
+      <h5>{{fullTitle}}</h5>
+      <p>{{authors}}</p>
     </div>
     <div class="actions">
       <font-awesome-icon
@@ -23,16 +23,16 @@
         @click="$emit('remove-action')"
       ></font-awesome-icon>
       <font-awesome-icon
-        :title="`Start Reading ${book.title}`"
-        v-if="startReadingAction"
+        :title="`Start reading ${book.title}`"
+        v-if="startAction"
         :icon="['far', 'book-alt']"
         size="lg"
         class="add-button"
         @click="$emit('start-action')"
       ></font-awesome-icon>
       <font-awesome-icon
-        :title="`Finish Reading ${book.title}`"
-        v-if="finishReadingAction"
+        :title="`Finish reading ${book.title}`"
+        v-if="finishAction"
         :icon="['far', 'book-open']"
         size="lg"
         class="add-button"
@@ -57,13 +57,25 @@ export default {
       type: Boolean,
       default: false
     },
-    startReadingAction: {
+    startAction: {
       type: Boolean,
       default: false
     },
-    finishReadingAction: {
+    finishAction: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    fullTitle() {
+      if (this.book.subtitle !== null)
+        return `${this.book.title}: ${this.book.subtitle}`
+      return this.book.title
+    },
+    authors() {
+      if (this.book.authors === undefined) return ''
+      const authorList = this.book.authors.map(author => author.name)
+      return authorList.join(', ')
     }
   }
 }
