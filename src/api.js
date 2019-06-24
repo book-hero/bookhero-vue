@@ -1,12 +1,14 @@
 import axios from 'axios'
 const BASE_URL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:8000/' : 'http://api.bookhero.net/'
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8000/'
+    : 'https://api.bookhero.net/'
 
-function isFunction(functionToCheck) {
-  return functionToCheck && typeof (functionToCheck) === 'function'
+function isFunction (functionToCheck) {
+  return functionToCheck && typeof functionToCheck === 'function'
 }
 
-async function makeCall(axiosMethod, params) {
+async function makeCall (axiosMethod, params) {
   if (!isFunction(axiosMethod)) throw Error('axiosMethod is not a function')
   console.log(...params)
   return axiosMethod(...params)
@@ -14,24 +16,24 @@ async function makeCall(axiosMethod, params) {
     .catch(error => ({ errors: error.response.data }))
 }
 
-function apiFactory(base) {
+function apiFactory (base) {
   return {
-    get(additionalUrl = '', params = {}) {
+    get (additionalUrl = '', params = {}) {
       const url = `${base}${additionalUrl}/`
       return makeCall(axios.get, [url, { params }])
     },
-    post(additionalUrl = '', body = {}) {
+    post (additionalUrl = '', body = {}) {
       const url = `${base}${additionalUrl}/`
       return makeCall(axios.post, [url, body])
     },
-    put(url) {
+    put (url) {
       axios.put(base + url || '')
     },
-    delete(additionalUrl = '', params = {}) {
+    delete (additionalUrl = '', params = {}) {
       const url = `${base}${additionalUrl}/`
       return makeCall(axios.delete, [url, { params }])
     },
-    patch(additionalUrl = '', body = {}) {
+    patch (additionalUrl = '', body = {}) {
       const url = `${base}${additionalUrl}/`
       return makeCall(axios.patch, [url, body])
     }
