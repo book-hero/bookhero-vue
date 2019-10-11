@@ -1,4 +1,5 @@
 import axios from 'axios'
+import * as R from 'ramda'
 import { authApi, booksApi } from '../api'
 
 export default {
@@ -25,9 +26,11 @@ export default {
     async refreshToken({ commit }) {
       const refreshToken = localStorage.getItem('refreshToken')
       const result = await authApi.post('/refresh', { refresh: refreshToken })
-      console.log({ result })
-      commit('setTokens', result)
-      commit('setLogin', true)
+
+      if (R.isNil(result.errors)) {
+        commit('setTokens', result)
+        commit('setLogin', true)
+      }
     }
   },
   mutations: {
