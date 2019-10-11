@@ -18,6 +18,12 @@ export default new Router({
       component: Login
     },
     {
+      path: '/error/:code',
+      name: 'error',
+      component: () => import('./pages/error'),
+      props: true
+    },
+    {
       path: '/',
       name: 'home',
       component: Main,
