@@ -1,5 +1,4 @@
 import { booksApi } from '../api'
-import * as R from 'ramda'
 
 export default {
   state: {
@@ -10,7 +9,7 @@ export default {
       const result = await booksApi.get()
       console.log({ result })
     },
-    async addBook({ }, book) {
+    async addBook({ commit }, book) {
       // first add a book to the database
       const result = await booksApi.post('', book)
       return result

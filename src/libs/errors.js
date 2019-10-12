@@ -31,8 +31,8 @@ const displayError = R.curry((severity, type, code, message) => {
 
 const majorError = displayError(severities.MAJOR)
 
-const moderateError = displayError(severities.MODERATE)
+// const moderateError = displayError(severities.MODERATE)
 
-const minorError = displayError(severities.MINOR)
+// const minorError = displayError(severities.MINOR)
 
 export const majorApiError = majorError(type.GENERIC_API)

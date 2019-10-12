@@ -7,19 +7,8 @@
 </template>
 
 <script>
-import axios from 'axios'
 import SearchBar from '../components/search-bar'
 import SearchResults from '../components/search-results'
-
-// const openLibraryApi = axios.create({
-//   url: 'http://openlibrary.org/search.json',
-//   transformRequest: [
-//     (data, headers) => {
-//       delete headers.common.Authorization
-//       return data
-//     }
-//   ]
-// })
 
 export default {
   components: {

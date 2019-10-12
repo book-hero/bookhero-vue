@@ -68,8 +68,7 @@ export default {
   },
   computed: {
     fullTitle() {
-      if (this.book.subtitle !== null)
-        return `${this.book.title}: ${this.book.subtitle}`
+      if (this.book.subtitle !== null) { return `${this.book.title}: ${this.book.subtitle}` }
       return this.book.title
     },
     authors() {

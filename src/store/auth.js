@@ -1,6 +1,6 @@
 import axios from 'axios'
 import * as R from 'ramda'
-import { authApi, booksApi } from '../api'
+import { authApi } from '../api'
 
 export default {
   state: {

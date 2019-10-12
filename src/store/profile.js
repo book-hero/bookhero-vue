@@ -11,7 +11,7 @@ export default {
     },
     async addBookToList({ dispatch }, book) {
       let newBook
-      if (book.id === "OL") {
+      if (book.id === 'OL') {
         newBook = await dispatch('addBook', book)
       }
       const id = (newBook !== undefined) ? newBook.id : book.id
