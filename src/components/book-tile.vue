@@ -68,13 +68,17 @@ export default {
   },
   computed: {
     fullTitle() {
-      if (this.book.subtitle !== null) { return `${this.book.title}: ${this.book.subtitle}` }
-      return this.book.title
+      if (this.book.subtitle !== null) {
+        return `${this.book.title}: ${this.book.subtitle}`
+      } else {
+        return this.book.title
+      }
     },
     authors() {
-      if (this.book.authors === undefined) return ''
-      const authorList = this.book.authors.map(author => author.name)
-      return authorList.join(', ')
+      if (this.book.authors === undefined) {
+        return ''
+      }
+      return this.book.authors.map(author => author.name).join(', ')
     }
   }
 }
