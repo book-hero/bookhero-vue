@@ -21,7 +21,11 @@ export default new Router({
     {
       path: '/error/:code',
       name: 'error',
+<<<<<<< HEAD
       component: Error,
+=======
+      component: () => import('./pages/error'),
+>>>>>>> ee0c3ae80fd191ec9243c6adc0bfcf4df3aae4f7
       props: true
     },
     {

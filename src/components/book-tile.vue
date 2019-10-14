@@ -68,13 +68,22 @@ export default {
   },
   computed: {
     fullTitle() {
+<<<<<<< HEAD
       if (this.book.subtitle !== null) { return `${this.book.title}: ${this.book.subtitle}` }
       return this.book.title
+=======
+      if (this.book.subtitle !== null) {
+        return `${this.book.title}: ${this.book.subtitle}`
+      } else {
+        return this.book.title
+      }
+>>>>>>> ee0c3ae80fd191ec9243c6adc0bfcf4df3aae4f7
     },
     authors() {
-      if (this.book.authors === undefined) return ''
-      const authorList = this.book.authors.map(author => author.name)
-      return authorList.join(', ')
+      if (this.book.authors === undefined) {
+        return ''
+      }
+      return this.book.authors.map(author => author.name).join(', ')
     }
   }
 }
