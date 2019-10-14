@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { authApi, booksApi } from '../api'
+import router from '@/router'
+import { authApi } from '../api'
 
 export default {
   state: {
@@ -7,7 +8,7 @@ export default {
     isLoggedIn: false
   },
   actions: {
-    async login({ commit }, info) {
+    async login ({ commit }, info) {
       const result = await authApi.post('', info)
 
       // Check errors
@@ -18,19 +19,28 @@ export default {
 
       return result
     },
-    logout({ commit }) {
+    logout ({ commit }) {
       commit('setTokens', { refresh: '', access: '' })
       commit('setLogin', false)
     },
-    async refreshToken({ commit }) {
+    async refreshToken ({ commit, dispatch }) {
       const refreshToken = localStorage.getItem('refreshToken')
-      const result = await authApi.post('/refresh', { refresh: refreshToken })
-      commit('setTokens', result)
-      commit('setLogin', true)
+      let result
+      try {
+        result = await authApi.post('/refresh', { refresh: refreshToken })
+        commit('setTokens', result)
+        commit('setLogin', true)
+      } catch {
+        console.log('hello')
+        if (result.errors.code === 'token_not_valid') {
+          dispatch('logout')
+          router.replace('login')
+        }
+      }
     }
   },
   mutations: {
-    setTokens(state, tokens) {
+    setTokens (state, tokens) {
       if (tokens.refresh !== '') {
         localStorage.setItem('refreshToken', tokens.refresh)
       } else {
@@ -39,13 +49,13 @@ export default {
       axios.defaults.headers.common['Authorization'] = `Bearer ${tokens.access}`
       state.accessToken = tokens.access
     },
-    setLogin(state, status) {
+    setLogin (state, status) {
       state.isLoggedIn = status
     }
   },
   getters: {
-    refreshToken() {
+    refreshToken () {
       return localStorage.getItem('refreshToken')
-    },
+    }
   }
 }

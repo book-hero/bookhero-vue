@@ -11,7 +11,7 @@
           v-for="userBook in currentlyReading"
           :key="userBook.book.id"
           v-on:remove-action="removeBook(userBook.id)"
-          v-on:finish-action="finishBook(userBook.id)"
+          v-on:finish-action="finishBookModal(userBook)"
         ></book-tile>
         <br>
         <h6>Coming Up</h6>
@@ -22,36 +22,43 @@
           v-for="userBook in toRead"
           :key="userBook.book.id"
           v-on:remove-action="removeBook(userBook.id)"
-          v-on:start-action="startBook(userBook.id)"
+          v-on:start-action="startBook({id: userBook.id, status: 2})"
         ></book-tile>
       </div>
     </catch-zero-state>
+    <portal to="modal" v-if="openFinishModal">
+      <finish-book-modal :book="finishedBook" @close="openFinishModal = false"></finish-book-modal>
+    </portal>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import CatchZeroState from './catch-zero-state'
 import BookTile from './book-tile'
+import FinishBookModal from './finish-book-modal'
 
 export default {
   data() {
-    return {}
+    return {
+      finishedBook: {},
+      openFinishModal: false
+    }
   },
   components: {
     CatchZeroState,
-    BookTile
+    BookTile,
+    FinishBookModal
   },
   methods: {
-    removeBook(id) {
-      this.$store.dispatch('removeBookFromList', id)
+    finishBookModal(book) {
+      this.finishedBook = book
+      this.openFinishModal = true
     },
-    startBook(id) {
-      this.$store.dispatch('updateBookStatus', { id, status: 2 })
-    },
-    finishBook(id) {
-      this.$store.dispatch('updateBookStatus', { id, status: 3 })
-    }
+    ...mapActions({
+      removeBook: 'removeBookFromList',
+      startBook: 'updateBookStatus'
+    })
   },
   computed: {
     currentlyReading() {
@@ -66,3 +73,6 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+</style>

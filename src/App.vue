@@ -2,14 +2,14 @@
   <div>
     <div id="app">
       <router-view></router-view>
+      <portal-target name="modal"></portal-target>
       <!-- <main-layout></main-layout> -->
     </div>
   </div>
 </template>
 
 <script>
-export default {
-}
+export default {}
 </script>
 
 <style lang="scss">

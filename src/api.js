@@ -10,10 +10,9 @@ function isFunction (functionToCheck) {
 
 async function makeCall (axiosMethod, params) {
   if (!isFunction(axiosMethod)) throw Error('axiosMethod is not a function')
-  console.log(...params)
   return axiosMethod(...params)
     .then(response => response.data)
-    .catch(error => ({ errors: error.response.data }))
+    .catch(error => error.response.data)
 }
 
 function apiFactory (base) {

@@ -11,7 +11,7 @@ export default {
     },
     async addBookToList({ dispatch }, book) {
       let newBook
-      if (book.id === "OL") {
+      if (book.id === 'OL') {
         newBook = await dispatch('addBook', book)
       }
       const id = (newBook !== undefined) ? newBook.id : book.id
@@ -25,6 +25,10 @@ export default {
     },
     async updateBookStatus({ dispatch }, book) {
       await userApi.patch('/books/' + book.id, { status: book.status })
+      dispatch('getBookList')
+    },
+    async finishBook({ dispatch }, bookInfo) {
+      await userApi.post(`/books/${bookInfo.id}/finish`, { selected_descriptor: bookInfo.selectedDescriptor, status: bookInfo.status })
       dispatch('getBookList')
     }
   },
