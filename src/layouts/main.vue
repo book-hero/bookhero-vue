@@ -2,7 +2,9 @@
   <div id="main-layout">
     <nav-bar></nav-bar>
     <div class="content">
-      <div id="right-column" class="col-2"></div>
+      <div id="right-column" class="col-2">
+        <profile/>
+      </div>
       <div id="middle-column" class="col">
         <router-view></router-view>
       </div>
@@ -15,11 +17,14 @@
 
 <script>
 import NavBar from '../components/navbar'
-import BookList from '../components/book-list'
+import BookList from '../components/books/book-list'
+import Profile from '../components/profile/profile.vue'
+
 export default {
   components: {
     NavBar,
-    BookList
+    BookList,
+    Profile
   },
   data() {
     return {}

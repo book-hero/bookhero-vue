@@ -1,4 +1,4 @@
-import { booksApi } from '../api'
+import { userApi, booksApi } from '../api'
 
 export default {
   state: {
@@ -18,6 +18,24 @@ export default {
       const results = await booksApi.get('/search', { title: term })
       commit('setSearchResults', results)
       console.log(results)
+    },
+    async addBookToList({ dispatch }, book) {
+      let newBook
+      if (book.id === 'OL') {
+        newBook = await dispatch('addBook', book)
+      }
+      const id = (newBook !== undefined) ? newBook.id : book.id
+      const bookToAdd = { book: newBook || book, book_id: id, status: 1 }
+      await userApi.post('/books', bookToAdd)
+      dispatch('getBookList')
+    },
+    async removeBookFromList({ dispatch }, bookId) {
+      await userApi.delete('/books/' + bookId)
+      dispatch('getBookList')
+    },
+    async updateBookStatus({ dispatch }, book) {
+      await userApi.patch('/books/' + book.id, { status: book.status })
+      dispatch('getBookList')
     }
   },
   mutations: {

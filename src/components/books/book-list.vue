@@ -31,7 +31,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import CatchZeroState from './catch-zero-state'
+import CatchZeroState from '../catch-zero-state'
 import BookTile from './book-tile'
 
 export default {

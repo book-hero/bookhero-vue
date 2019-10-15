@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import SearchBar from '../components/search-bar'
-import SearchResults from '../components/search-results'
+import SearchBar from '../components/books/search-bar'
+import SearchResults from '../components/books/search-results'
 
 export default {
   components: {
