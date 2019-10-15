@@ -1,7 +1,7 @@
 import router from '../router'
 import * as R from 'ramda'
 
-function getKeyFromValue(obj, value) {
+function getKeyFromValue (obj, value) {
   return R.invertObj(obj).value
 }
 
@@ -20,7 +20,12 @@ const displayError = R.curry((severity, type, code, message) => {
     // navigate to page with code and message
     router.push({ name: 'error', params: { code: type + code, message } })
   } else {
-    console.log(`Unable to handle error of ${getKeyFromValue(severities, severity)} severity`)
+    console.log(
+      `Unable to handle error of ${getKeyFromValue(
+        severities,
+        severity
+      )} severity`
+    )
   }
 })
 

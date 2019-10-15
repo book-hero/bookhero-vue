@@ -5,6 +5,7 @@ import Discover from './pages/discover'
 import Feed from './pages/feed'
 import Main from './layouts/main'
 import Login from './pages/login'
+import Error from './pages/error'
 
 Vue.use(Router)
 

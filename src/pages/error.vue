@@ -7,6 +7,15 @@
 
 <script>
 export default {
-  props: ['code', 'message']
+  props: {
+    code: {
+      type: Number,
+      default: 100
+    },
+    message: {
+      type: String,
+      default: 'hello?'
+    }
+  }
 }
 </script>

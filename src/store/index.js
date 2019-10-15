@@ -26,7 +26,7 @@ const checkTokens = store => {
         return true
       }
     } else {
-    // Refresh token if anything fails
+      // Refresh token if anything fails
       store.dispatch('refreshToken')
       return false
     }

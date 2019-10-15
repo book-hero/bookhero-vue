@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/'
+import './globals'
 import Loader from './components/loader'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -19,7 +20,8 @@ router.beforeEach(async(to, from, next) => {
   }
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    setTimeout(() => { // This is to make sure stuff runs right.
+    setTimeout(() => {
+      // This is to make sure stuff runs right.
       if (!store.state.auth.isLoggedIn) {
         next({
           path: '/login',

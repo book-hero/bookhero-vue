@@ -23,7 +23,7 @@ export default {
       commit('setTokens', { refresh: '', access: '' })
       commit('setLogin', false)
     },
-    async refreshToken({ commit }) {
+    async refreshToken({ commit, dispatch }) {
       const refreshToken = localStorage.getItem('refreshToken')
       const result = await authApi.post('/refresh', { refresh: refreshToken })
 
