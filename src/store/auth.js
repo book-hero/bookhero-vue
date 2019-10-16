@@ -1,6 +1,7 @@
 import axios from 'axios'
 import * as R from 'ramda'
 import { authApi } from '../api'
+import router from '../router'
 
 export default {
   state: {
@@ -23,13 +24,22 @@ export default {
       commit('setTokens', { refresh: '', access: '' })
       commit('setLogin', false)
     },
-    async refreshToken({ commit, dispatch }) {
+    async refreshToken({ commit, dispatch }, options) {
       const refreshToken = localStorage.getItem('refreshToken')
       const result = await authApi.post('/refresh', { refresh: refreshToken })
 
       if (R.isNil(result.errors)) {
         commit('setTokens', result)
         commit('setLogin', true)
+
+        if (options.action) {
+          dispatch(options.action.type, options.action.payload)
+        }
+      } else {
+        if (result.errors.code === 'token_not_valid') {
+          dispatch('logout')
+          router.push({ name: 'login', params: { redirect: router.currentRoute.fullPath } })
+        }
       }
     }
   },

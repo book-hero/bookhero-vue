@@ -69,8 +69,9 @@ export default {
       })
       if (result !== undefined && result.errors !== undefined) {
         this.serverErrors = result.errors.non_field_errors || []
+      } else {
+        this.$router.push({ name: 'feed' })
       }
-      this.$router.push({ name: 'feed' })
     },
     validForm() {
       this.emailError = false

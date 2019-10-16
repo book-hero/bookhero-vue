@@ -3,15 +3,6 @@ import App from './App.vue'
 import router from './router'
 import store from './store/'
 import './globals'
-import Loader from './components/loader'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import FontAwesomeIcons from './libs/font-awesome'
-
-library.add(...FontAwesomeIcons)
-
-Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.component('loader', Loader)
 
 // this is the auth guard to make sure you are signed in before going anywhere.
 router.beforeEach(async(to, from, next) => {

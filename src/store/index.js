@@ -2,33 +2,28 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import jwtDecode from 'jwt-decode'
+import * as R from 'ramda'
 
+import attributes from './attributes'
 import auth from './auth'
 import books from './books'
 import profile from './profile'
 
 Vue.use(Vuex)
 
+function tokenIsExpired(token, expireTime) {
+  return !R.isNil(token) && jwtDecode(token).exp * 1000 - Date.now() > expireTime
+}
+
 const checkTokens = store => {
   store.subscribeAction(async(action, state) => {
     // Skip this for actions that don't need to refresh token
     const skipActionTypes = ['login', 'refreshToken']
-    if (skipActionTypes.filter(type => type === action.type).length > 0) {
-      return true
-    } else if (state.auth.accessToken !== '') {
-      // Check if token needs refreshing
-      const tokenExpiryWindow = 600 // milliseconds (10 min)
-      const tokenExpiry = jwtDecode(state.auth.accessToken).exp
-      const now = parseInt(Date.now().toString().slice(0, -3))
-      // if token has more than 10 minutes left
-      if (tokenExpiry - now > tokenExpiryWindow) {
-        // This token is fine, don't do anything
-        return true
+    const expiryWindow = 10 * 60 * 100 // 10 min
+    if (!skipActionTypes.includes(action.type)) {
+      if (!tokenIsExpired(state.auth.accessToken, expiryWindow)) {
+        store.dispatch('refreshToken', { action })
       }
-    } else {
-      // Refresh token if anything fails
-      store.dispatch('refreshToken')
-      return false
     }
   })
 }
@@ -59,6 +54,7 @@ export default new Vuex.Store({
   },
   plugins: [checkTokens],
   modules: {
+    attributes,
     auth,
     books,
     profile
