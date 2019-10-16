@@ -31,6 +31,9 @@ export default {
 </script>
 
 <style scoped>
+input {
+  height: unset;
+}
 .input-group-append button {
   padding: 0.75rem 1.25rem;
 }
