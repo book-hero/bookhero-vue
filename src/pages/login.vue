@@ -56,9 +56,6 @@ export default {
       serverErrors: []
     }
   },
-  created() {
-    console.log('login created')
-  },
   methods: {
     async login() {
       this.errors = []
@@ -70,7 +67,11 @@ export default {
       if (result !== undefined && result.errors !== undefined) {
         this.serverErrors = result.errors.non_field_errors || []
       } else {
-        this.$router.push({ name: 'feed' })
+        if (this.$route.query.redirect) {
+          this.$router.push(this.$route.query.redirect)
+        } else {
+          this.$router.push({ name: 'feed' })
+        }
       }
     },
     validForm() {
