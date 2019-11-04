@@ -6,7 +6,8 @@ export default {
   },
   actions: {
     async getBookList({ commit }) {
-      let result = await userApi.get('/books')
+      const result = await userApi.get('/books')
+      console.log({ getBookList: result })
       commit('setBookList', result)
     }
   },

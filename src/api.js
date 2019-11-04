@@ -15,7 +15,6 @@ async function makeCall(axiosMethod, params) {
   if (!isFunction(axiosMethod)) throw Error('axiosMethod is not a function')
   return axiosMethod(...params)
     .then(response => response.data)
-
     .catch(error => {
       if (R.isNil(error.response)) {
         majorApiError('01', 'Something went terribly wrong, but we don\'t know what.')

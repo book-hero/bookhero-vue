@@ -1,7 +1,8 @@
 <template>
   <div id="book-list">
     <h4>Book List</h4>
-    <catch-zero-state emptyText="You don't have any books in your booklist!">
+    <loader v-if="isLoading"></loader>
+    <catch-zero-state v-else emptyText="You don't have any books in your booklist!">
       <div class="list-group" v-if="userBooks.length > 0">
         <h6>Currently Reading</h6>
         <book-tile
@@ -42,13 +43,20 @@ export default {
   data() {
     return {
       finishedBook: {},
-      openFinishModal: false
+      openFinishModal: false,
+      isLoading: true
     }
   },
   components: {
     CatchZeroState,
     BookTile,
     FinishBookModal
+  },
+  mounted() {
+    this.$store.dispatch('getBookList')
+      .then(() => {
+        this.isLoading = false
+      })
   },
   methods: {
     finishBookModal(book) {
