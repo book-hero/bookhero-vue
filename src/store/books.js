@@ -17,7 +17,6 @@ export default {
     async searchBooks({ commit }, term) {
       const results = await booksApi.get('/search', { title: term })
       commit('setSearchResults', results)
-      console.log({ searchBooks: results })
     },
     async addBookToList({ dispatch }, book) {
       let newBook

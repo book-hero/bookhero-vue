@@ -56,7 +56,6 @@ function authGuard(to, from, next) {
     setTimeout(() => {
       // This is to make sure stuff runs right.
       if (!store.state.auth.isLoggedIn) {
-        console.log('authGuard')
         next({
           path: '/login',
           query: { redirect: to.fullPath }
