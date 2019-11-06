@@ -17,11 +17,13 @@ export default {
       const results = await booksApi.get('/search', { title: term })
       commit('setSearchResults', results)
     },
-    async addBookToList({ dispatch }, inBook) {
-      const book = inBook.id === 'OL' ? await dispatch('addBook', inBook) : inBook
-      const bookToAdd = { book, book_id: book.id, status: 1 }
-      await userBooksApi.post('', bookToAdd)
-      dispatch('getBookList')
+    async addBookToList({ dispatch, state }, inBook) {
+      if (state.userBooks.filter(book => book.book.id === inBook.id).length < 1) {
+        const book = inBook.id === 'OL' ? await dispatch('addBook', inBook) : inBook
+        const bookToAdd = { book, book_id: book.id, status: 1 }
+        await userBooksApi.post('', bookToAdd)
+        dispatch('getBookList')
+      }
     },
     async removeBookFromList({ dispatch }, bookId) {
       await userBooksApi.delete('/' + bookId)
