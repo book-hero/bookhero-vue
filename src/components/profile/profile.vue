@@ -23,6 +23,9 @@ import ProfileImage from './profile-image.vue'
 export default {
   components: {
     ProfileImage
+  },
+  async mounted() {
+    await this.$store.dispatch('getAttributes')
   }
 }
 </script>

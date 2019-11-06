@@ -55,4 +55,6 @@ export const authApi = (() => apiFactory(BASE_URL + 'auth'))()
 
 export const userApi = (() => apiFactory(BASE_URL + 'user'))()
 
+export const userBooksApi = (() => apiFactory(BASE_URL + 'user/books'))()
+
 export const attributesApi = (() => apiFactory(BASE_URL + 'attributes'))()

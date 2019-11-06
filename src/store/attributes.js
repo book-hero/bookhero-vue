@@ -1,4 +1,5 @@
 import { attributesApi } from '../api'
+import * as R from 'ramda'
 
 function shuffleArray(array) {
   let tempArray = array.slice(0)
@@ -26,12 +27,12 @@ export default {
   },
   getters: {
     randomDescriptorList: state => () => {
-      const descriptors = state.attributes.map(attribute => {
-        const rand = Math.floor(Math.random() * attribute.descriptors.length)
-        console.log(rand)
-        return attribute.descriptors[rand]
-      })
-      return shuffleArray(descriptors)
+      return shuffleArray(state.attributes.map(attribute => R.pipe(
+        Math.random,
+        Math.floor,
+        R.nth(R.__, attribute.descriptors),
+        R.tap(console.log)
+      )(attribute.descriptors.length)))
     }
   }
 }

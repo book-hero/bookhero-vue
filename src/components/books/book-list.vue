@@ -52,11 +52,10 @@ export default {
     BookTile,
     FinishBookModal
   },
-  mounted() {
-    this.$store.dispatch('getBookList')
-      .then(() => {
-        this.isLoading = false
-      })
+  async mounted() {
+    await this.$store.dispatch('getBookList')
+
+    this.isLoading = false
   },
   methods: {
     finishBookModal(book) {
@@ -76,7 +75,7 @@ export default {
       return this.userBooks.filter(book => book.status === 1)
     },
     ...mapState({
-      userBooks: state => state.profile.userBooks
+      userBooks: state => state.books.userBooks
     })
   }
 }

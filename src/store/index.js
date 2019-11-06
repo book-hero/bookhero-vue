@@ -22,7 +22,7 @@ function minutesToMilliseconds(min) {
 const checkTokens = store => {
   store.subscribeAction(async(action, state) => {
     // Skip this for actions that don't need to refresh token
-    const skipActionTypes = ['login', 'refreshToken', 'init']
+    const skipActionTypes = ['login', 'refreshToken']
     const expiryWindow = minutesToMilliseconds(10) // 10 min
     if (!skipActionTypes.includes(action.type)) {
       if (!tokenIsExpired(state.auth.accessToken, expiryWindow)) {

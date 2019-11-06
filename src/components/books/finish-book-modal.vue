@@ -3,7 +3,7 @@
     @close="$emit('close')"
     title="Well Done!"
     confirmText="Finish"
-    @confirm-action="finishBook({id: book.id, selectedDescriptor, status: 3})"
+    @confirm-action="finishBook()"
   >
     <div>
       <h6>Congratulations on finishing {{fullTitle}}!</h6>
@@ -41,8 +41,8 @@ export default {
     }
   },
   methods: {
-    finishBook(bookInfo) {
-      this.$store.dispatch('finishBook', bookInfo)
+    finishBook() {
+      this.$store.dispatch('finishBook', { book: this.book.id, selected_descriptor: this.selectedDescriptor, status: 3 })
       this.$emit('close')
     }
   },
